@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textColorActive">#FFFFFFFF</color>
+    <color name="textColorInactive">#80FFFFFF</color>
+    <color name="textColorDisabled">#808C8B8E</color>
+</resources>

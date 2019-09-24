@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomCircleNavItemView">
+        <attr name="bt_active_icon" format="reference" />
+        <attr name="bt_inactive_icon" format="reference" />
+        <attr name="bt_disabled_icon" format="reference" />
+        <attr name="bt_iconWidth" format="dimension" />
+        <attr name="bt_iconHeight" format="dimension" />
+        <attr name="bt_title" format="string" />
+        <attr name="bt_titleSize" format="dimension" />
+        <attr name="bt_imgColorActive" format="color" />
+        <attr name="bt_imgColorInactive" format="color" />
+        <attr name="bt_imgColorDisable" format="color" />
+        <attr name="bt_textColorActive" format="color" />
+        <attr name="bt_textColorInactive" format="color" />
+        <attr name="bt_textColorDisable" format="color" />
+        <attr name="bt_active" format="boolean" />
+        <attr name="bt_titlePadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="BottomCircleNavCircleView">
+        <attr name="ci_icon" format="reference" />
+        <attr name="ci_iconWidth" format="dimension" />
+        <attr name="ci_iconHeight" format="dimension" />
+        <attr name="ci_imgColorActive" format="color" />
+        <attr name="ci_imgColorInactive" format="color" />
+        <attr name="ci_imgColorDisable" format="color" />
+        <attr name="ci_bgColor" format="color" />
+        <attr name="ci_active" format="boolean" />
+        <attr name="ci_imgPadding" format="dimension" />
+        <attr name="ci_padding" format="dimension" />
+    </declare-styleable>
+</resources>
