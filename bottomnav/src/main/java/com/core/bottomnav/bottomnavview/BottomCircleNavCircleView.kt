@@ -56,8 +56,6 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
     var activeIcon: Drawable? = null
     var inactiveIcon: Drawable? = null
     var disabledIcon: Drawable? = null
-    var imgColorActive = ContextCompat.getColor(context, android.R.color.white)
-    var imgColorDisable = ContextCompat.getColor(context, android.R.color.darker_gray)
     var iconWidth = context.resources.getDimension(R.dimen._30sdp)
     var iconHeight = context.resources.getDimension(R.dimen._60sdp)
     var bgColor = Color.RED
@@ -76,21 +74,21 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
                 activeIcon = AppCompatResources.getDrawable(
                     context,
                     ta.getResourceId(
-                        R.styleable.BottomCircleNavCircleView_ci_icon,
+                        R.styleable.BottomCircleNavCircleView_ci_active_icon,
                         R.drawable.ic_nav_barcode_active
                     )
                 )
                 inactiveIcon = AppCompatResources.getDrawable(
                     context,
                     ta.getResourceId(
-                        R.styleable.BottomCircleNavCircleView_ci_icon,
+                        R.styleable.BottomCircleNavCircleView_ci_inactive_icon,
                         R.drawable.ic_nav_barcode_disabled
                     )
                 )
                 disabledIcon = AppCompatResources.getDrawable(
                     context,
                     ta.getResourceId(
-                        R.styleable.BottomCircleNavCircleView_ci_icon,
+                        R.styleable.BottomCircleNavCircleView_ci_disabled_icon,
                         R.drawable.ic_nav_barcode_noactive
                     )
                 )
@@ -103,15 +101,6 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
                     ta.getDimension(R.styleable.BottomCircleNavCircleView_ci_imgPadding, imgPadding)
                 defPadding =
                     ta.getDimension(R.styleable.BottomCircleNavCircleView_ci_padding, defPadding)
-                imgColorActive =
-                    ta.getColor(
-                        R.styleable.BottomCircleNavCircleView_ci_imgColorActive,
-                        imgColorActive
-                    )
-                imgColorDisable = ta.getColor(
-                    R.styleable.BottomCircleNavCircleView_ci_imgColorDisable,
-                    imgColorDisable
-                )
                 bgColor = ta.getColor(
                     R.styleable.BottomCircleNavCircleView_ci_bgColor,
                     bgColor

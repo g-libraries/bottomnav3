@@ -50,8 +50,8 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
     var inactiveIcon: Drawable? = null
     var disabledIcon: Drawable? = null
     var textColorActive = ContextCompat.getColor(context, R.color.textColorActive)
-    var textColorInactive = ContextCompat.getColor(context,  R.color.textColorInactive)
-    var textColorDisable = ContextCompat.getColor(context,  R.color.textColorDisabled)
+    var textColorInactive = ContextCompat.getColor(context, R.color.textColorInactive)
+    var textColorDisable = ContextCompat.getColor(context, R.color.textColorDisabled)
     var titleSize = context.resources.getDimension(R.dimen._9sdp)
     var iconWidth = context.resources.getDimension(R.dimen._30sdp)
     var iconHeight = context.resources.getDimension(R.dimen._40sdp)
