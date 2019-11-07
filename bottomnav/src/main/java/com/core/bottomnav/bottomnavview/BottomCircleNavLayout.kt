@@ -205,7 +205,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     override fun onClick(v: View) {
         val changedPosition = getItemPositionById(v.id)
         if (changedPosition >= 0) {
-            if(bottomNavClickListener?.onClicked(currentActiveItemPosition, v.id)!!){
+            if(bottomNavClickListener?.onClicked(changedPosition, v.id)!!){
                 setCurrentActiveItem(changedPosition)
 
                 //changed the current active position
@@ -214,5 +214,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         } else {
             Timber.w("Selected id not found! Cannot toggle")
         }
+
+
     }
 }
