@@ -56,7 +56,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 if (pos == navigationView.getCurrentActiveItemPosition()) return false
                 return if (guest && params.notAuthIds.contains(id)) {
                     navListener.invoke()
-                    true
+                    false
                 } else {
                     params.navMenuIds[id]?.let {
                         navigationController.navigate(it)
