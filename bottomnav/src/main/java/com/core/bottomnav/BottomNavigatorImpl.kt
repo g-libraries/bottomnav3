@@ -124,7 +124,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         }
 
         if (guest) disableMenuItems(params.notAuthIds)
-        if (!online) disableMenuItems(params.noInternetIds)
+        if (!online) disableMenuItems(params.noInternetIds, false)
     }
 
     private fun disableMenuItems(list: ArrayList<Int>, enabled: Boolean = true) {
