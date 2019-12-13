@@ -15,7 +15,6 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import com.core.basicextensions.maskColor
 import com.core.bottomnav.R
 
 class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {

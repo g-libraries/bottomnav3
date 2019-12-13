@@ -2,17 +2,18 @@ package com.core.bottomnav
 
 import android.animation.ValueAnimator
 import android.app.Activity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.core.basicextensions.applyGlobalLayoutListener
+import androidx.navigation.fragment.FragmentNavigator
+import com.core.base.util.applyGlobalLayoutListener
+import com.core.base.util.getVisibleFragment
 import com.core.bottomnav.bottomnavview.BottomCircleNavLayout
 import com.core.bottomnav.bottomnavview.OnBottomNavClickListener
+import java.lang.reflect.Type
 
 abstract class BottomNavigatorImpl constructor(var activity: Activity, var params: Params) :
     IBottomNavigator {
@@ -21,9 +22,8 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         var navHostId: Int,
         var navViewId: Int,
         // Ids of views to disable/enable in various cases
-        var navMenuIds: Map<Int, Int>, // Map<Nav Menu item id, Nav Menu Navigation action id>
-        var noInternetIds: ArrayList<Int>,
-        var notAuthIds: ArrayList<Int>,
+        val menuItems: List<BottomNavItemData>,
+        val noBottomNavItems: List<Type>,
         // Menu itemViews alpha
         var alphaEnabled: Int = 255,
         var alphaDisabled: Int = 70
@@ -54,12 +54,12 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         navigationView.bottomNavClickListener = object : OnBottomNavClickListener {
             override fun onClicked(pos: Int, id: Int): Boolean {
                 if (pos == navigationView.getCurrentActiveItemPosition()) return false
-                return if (guest && params.notAuthIds.contains(id)) {
+                return if (guest && params.menuItems.find { it.menuItemId == id }?.noAuthAvailable!!) {
                     navListener.invoke()
                     false
                 } else {
-                    params.navMenuIds[id]?.let {
-                        navigationController.navigate(it)
+                    params.menuItems.find { it.menuItemId == id }?.let {
+                        navigationController.navigate(it.menuActionId)
                     }
                     true
                 }
@@ -69,14 +69,53 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         navigationView.applyGlobalLayoutListener { navH = navigationView.height }
     }
 
-    abstract fun attachNavigationCallbacks(
+    fun attachNavigationCallbacks(
         fragmentManager: FragmentManager,
         navigationController: NavController
-    )
+    ) {
+        fragmentManager.registerFragmentLifecycleCallbacks(object :
+            FragmentManager.FragmentLifecycleCallbacks() {
+
+            override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                super.onFragmentStarted(fm, f)
+                for (item in params.noBottomNavItems) {
+                    if (fragmentManager.getVisibleFragment() == item) {
+                        showNavStrategy =
+                            ShowNavStrategy(
+                                showInstant
+                            ) // Can set strategy to showDelayed for extra effects
+                        hideNavView()
+                    } else {
+                        showNavStrategy =
+                            ShowNavStrategy(
+                                showInstant
+                            )
+                    }
+                }
+            }
+
+            override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+                super.onFragmentViewDestroyed(fm, f)
+                for (item in params.menuItems)
+                    if (item.fragmentType == fragmentManager.getVisibleFragment()!!::class) {
+                        showNavStrategy.apply()
+                    } else {
+                        showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
+                    }
+            }
+        }, true)
+
+        navigationController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination is FragmentNavigator.Destination)
+                for ((index, item) in params.menuItems.withIndex())
+                    if (item.fragmentType.javaClass.name == destination.className) selectMenuItem(
+                        index
+                    )
+        }
+    }
 
     override fun hideNavView() {
         navigationView.visibility = View.GONE
-
     }
 
     override fun showNavView(delayed: Boolean) {
@@ -103,12 +142,15 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     // Internet and Auth status change logic
     override fun internetChanged(online: Boolean) {
         this@BottomNavigatorImpl.online = online
-        if (online) enableMenuItems() else disableMenuItems(params.noInternetIds, false)
+        if (online) enableMenuItems() else disableMenuItems(
+            params.menuItems.filterIndexed { _, item -> !item.noInternetAvailable },
+            false
+        )
     }
 
     override fun authorized(guest: Boolean) {
         this@BottomNavigatorImpl.guest = guest
-        if (!guest) enableMenuItems() else disableMenuItems(params.notAuthIds)
+        if (!guest) enableMenuItems() else disableMenuItems(params.menuItems.filterIndexed { _, item -> !item.noAuthAvailable })
     }
 
     protected fun selectMenuItem(index: Int) {
@@ -123,24 +165,19 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
             }
         }
 
-        if (guest) disableMenuItems(params.notAuthIds)
-        if (!online) disableMenuItems(params.noInternetIds, false)
+        if (guest) disableMenuItems(params.menuItems.filterIndexed { _, item -> !item.noAuthAvailable })
+        if (!online) disableMenuItems(
+            params.menuItems.filterIndexed { _, item -> !item.noInternetAvailable },
+            false
+        )
     }
 
-    private fun disableMenuItems(list: ArrayList<Int>, enabled: Boolean = true) {
-        for (id in list) {
-            navigationView.navItems.find { it.getId() == id }?.let {
+    private fun disableMenuItems(list: List<BottomNavItemData>, enabled: Boolean = true) {
+        for (item in list) {
+            navigationView.navItems.find { it.getId() == item.menuItemId }?.let {
                 it.disable(enabled)
             }
         }
-    }
-
-    private fun getById(menu: Menu, id: Int): MenuItem? {
-        for (i in 0 until menu.size()) {
-            if (menu[i].itemId == id)
-                return menu[i]
-        }
-        return null
     }
 
     // Strategy for Navigation view show animation
@@ -155,5 +192,6 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     val showInstant = {
         showNavView(false)
     }
+
 
 }
