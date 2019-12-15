@@ -13,9 +13,14 @@ data class BottomNavItemData(
     val menuItemId: Int,
     val menuActionId: Int,
     val fragmentType: Type,
+    val title: String,
+    val titleTextActive: String,
+    val titleTextInactive: String,
+    val titleTextDisabled: String,
     val noInternetAvailable: Boolean = false,
     val noAuthAvailable: Boolean = false,
-    val showNavBoolean: Boolean = true
+    val showNavBoolean: Boolean = true,
+    val isCircle: Boolean = false
 )
 
 // Map<Nav Menu item id, Nav Menu Navigation action id>

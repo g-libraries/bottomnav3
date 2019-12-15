@@ -13,5 +13,6 @@ interface BottomCircleNavItem {
     fun setOnItemClickListener(listener: View.OnClickListener)
     fun setState(isActive: Boolean)
     fun setTypeface(typface: Typeface)
+    fun setTitle(title:String)
     fun isDisabled(): Boolean
 }

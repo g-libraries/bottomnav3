@@ -61,6 +61,10 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
     var imgPadding = context.resources.getDimension(R.dimen._10sdp)
     var defPadding = context.resources.getDimension(R.dimen._10sdp)
 
+    fun init() {
+        createBubbleItemView(context)
+    }
+
     fun init(attrs: AttributeSet?) {
         active = false
         iconWidth = context.resources.getDimension(R.dimen._30sdp)
@@ -188,5 +192,9 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
         } else {
             deactivate()
         }
+    }
+
+    override fun setTitle(title: String) {
+
     }
 }

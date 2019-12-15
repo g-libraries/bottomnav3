@@ -1,6 +1,7 @@
 package com.core.bottomnav.bottomnavview
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
@@ -45,7 +46,9 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
     var disabled = false
     var active = false
-    var title: String? = "Title"
+
+    private var title: String? = "Title"
+
     var activeIcon: Drawable? = null
     var inactiveIcon: Drawable? = null
     var disabledIcon: Drawable? = null
@@ -66,6 +69,18 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
     lateinit var iconView: ImageView
     lateinit var titleView: TextView
+
+    fun init(title: String, textColorActive: String, textColorInactive: String, textColorDisable: String) {
+        this.title = title
+        this.textColorActive = Color.parseColor(textColorActive)
+        this.textColorInactive = Color.parseColor(textColorInactive)
+        this.textColorDisable = Color.parseColor(textColorDisable)
+
+        gravity = Gravity.CENTER
+
+        createBubbleItemView(context)
+        setState(false)
+    }
 
     fun init(attrs: AttributeSet?) {
         if (attrs != null) {
@@ -246,4 +261,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         setOnClickListener(listener)
     }
 
+    override fun setTitle(title: String) {
+        this.title = title
+    }
 }

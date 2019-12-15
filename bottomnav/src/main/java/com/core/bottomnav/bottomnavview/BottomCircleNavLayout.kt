@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.core.bottomnav.BottomNavItemData
 import timber.log.Timber
 import java.util.ArrayList
 
-class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
+class BottomCircleNavLayout : LinearLayout, View.OnClickListener {
 
     //constants
     private val TAG = "BNLView"
@@ -18,6 +20,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     private val MAX_ITEMS = 5
 
     var navItems: ArrayList<BottomCircleNavItem> = arrayListOf()
+    var navItemsViews: ArrayList<View> = arrayListOf()
 
     var bottomNavClickListener: OnBottomNavClickListener? = null
     var bottomNavCreatedListener: OnBottomNavCreated? = null
@@ -81,6 +84,54 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         post { updateChildNavItems() }
     }
 
+    fun init(dataItemList: List<BottomNavItemData>) {
+        setItemList(dataItemList)
+        setConstraints()
+    }
+
+    /**
+     * Set nav items
+     */
+
+    fun setItemList(dataItemList: List<BottomNavItemData>) {
+        val list = createViewsFromDataObjects(dataItemList) as ArrayList<View>
+        this.navItemsViews = list
+
+        for (item in navItemsViews) {
+            this.addView(item)
+        }
+    }
+
+    fun createViewsFromDataObjects(dataItemList: List<BottomNavItemData>): ArrayList<BottomCircleNavItem> {
+        val viewsList = arrayListOf<BottomCircleNavItem>()
+        for (itemData in dataItemList)
+            if (itemData.isCircle)
+                viewsList.add(createCircleView())
+            else
+                viewsList.add(createDefaultView(itemData))
+
+        return viewsList
+    }
+
+    fun createDefaultView(itemData: BottomNavItemData): BottomCircleNavItemView {
+        val itemView = BottomCircleNavItemView(context)
+        itemView.init(
+            itemData.title,
+            itemData.titleTextActive,
+            itemData.titleTextInactive,
+            itemData.titleTextDisabled
+        )
+
+        return itemView
+    }
+
+    fun createCircleView(): BottomCircleNavCircleView {
+        val itemView = BottomCircleNavCircleView(context)
+        itemView.init()
+
+        return itemView
+    }
+
     /**
      * Finds Child Elements of type [BottomCircleNavItem] and adds them to [.navItems]
      */
@@ -88,9 +139,10 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         navItems = ArrayList()
         for (index in 0 until childCount) {
             val view = getChildAt(index)
-            if (view is BottomCircleNavItem)
+            if (view is BottomCircleNavItem) {
+                navItemsViews.add(view)
                 navItems.add(view)
-            else {
+            } else {
                 Timber.w("Cannot have child navItems other than BottomCircleNavItem")
             }
         }
@@ -207,13 +259,37 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     override fun onClick(v: View) {
         val changedPosition = getItemPositionById(v.id)
         if (changedPosition >= 0) {
-            if(bottomNavClickListener?.onClicked(changedPosition, v.id)!!){
+            if (bottomNavClickListener?.onClicked(changedPosition, v.id)!!) {
                 setCurrentActiveItem(changedPosition)
             }
         } else {
             Timber.w("Selected id not found! Cannot toggle")
         }
+    }
 
+    fun setConstraints() {
+        for ((index, navItem) in navItemsViews.withIndex()) {
+            val params = navItem.layoutParams as ConstraintLayout.LayoutParams
+            when (index) {
+                0 -> {
+                    params.leftToLeft = this.id
+                    params.rightToLeft = navItemsViews[index + 1].id
+                }
+                navItemsViews.size - 1 -> {
+                    params.rightToRight = this.id
+                    params.leftToRight = navItemsViews[index - 1].id
+                }
+                else -> {
+                    params.rightToLeft = navItemsViews[index + 1].id
+                    params.leftToRight = navItemsViews[index - 1].id
 
+                }
+            }
+
+            params.topToTop = this.id
+            params.bottomToBottom = this.id
+
+            navItem.requestLayout()
+        }
     }
 }
