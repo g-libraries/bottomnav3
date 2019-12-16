@@ -12,7 +12,7 @@ import com.core.bottomnav.BottomNavItemData
 import timber.log.Timber
 import java.util.ArrayList
 
-class BottomCircleNavLayout : LinearLayout, View.OnClickListener {
+class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
     //constants
     private val TAG = "BNLView"
