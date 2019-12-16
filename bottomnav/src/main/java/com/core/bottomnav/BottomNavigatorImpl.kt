@@ -84,13 +84,15 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                                 showInstant
                             ) // Can set strategy to showDelayed for extra effects
                         hideNavView()
-                    } else {
-                        showNavStrategy =
-                            ShowNavStrategy(
-                                showInstant
-                            )
+
+                        return
                     }
                 }
+
+                showNavStrategy =
+                    ShowNavStrategy(
+                        showInstant
+                    )
             }
 
             override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {

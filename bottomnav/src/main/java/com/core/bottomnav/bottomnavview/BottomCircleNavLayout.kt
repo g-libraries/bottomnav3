@@ -307,10 +307,10 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             when (index) {
                 0 -> {
-                    set.addToHorizontalChain(navItem.id, this.id, navItemsViews[index + 1].id)
+                    set.addToHorizontalChain(navItem.id, navItemsViews[index + 1].id, this.id)
                 }
                 navItemsViews.size - 1 -> {
-                    set.addToHorizontalChain(navItem.id, navItemsViews[index - 1].id, this.id)
+                    set.addToHorizontalChain(navItem.id, this.id, navItemsViews[index - 1].id)
                 }
                 else -> {
                     set.addToHorizontalChain(
