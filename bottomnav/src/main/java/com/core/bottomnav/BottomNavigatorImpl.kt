@@ -97,12 +97,16 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
 
             override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentViewDestroyed(fm, f)
-                for (item in params.menuItems)
+                for (item in params.menuItems.filterIndexed { _, item -> !item.showNavBoolean }) {
                     if (item.fragmentType == fragmentManager.getVisibleFragment()!!::class) {
                         showNavStrategy.apply()
-                    } else {
-                        showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
                     }
+
+                    return
+                }
+
+                showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
+
             }
         }, true)
 
