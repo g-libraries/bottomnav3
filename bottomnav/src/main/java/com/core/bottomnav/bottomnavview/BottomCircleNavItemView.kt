@@ -20,11 +20,11 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
 
     constructor(context: Context?) : super(context) {
-        init(attrs = null)
+        //init(attrs = null)
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        init(attrs)
+ //       init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -32,7 +32,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         attrs,
         defStyleAttr
     ) {
-        init(attrs)
+  //      init(attrs)
     }
 
     constructor(
@@ -41,13 +41,13 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         defStyleAttr: Int,
         defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
-        init(attrs)
+     //   init(attrs)
     }
 
     var disabled = false
     var active = false
 
-    private var title: String? = "Title"
+    private var title: String? = null
 
     var activeIcon: Drawable? = null
     var inactiveIcon: Drawable? = null
