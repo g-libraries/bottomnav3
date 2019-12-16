@@ -307,10 +307,18 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             when (index) {
                 0 -> {
-                    set.addToHorizontalChainRTL(navItem.id, this.id, navItemsViews[index + 1].id)
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        ConstraintSet.PARENT_ID,
+                        navItemsViews[index + 1].id
+                    )
                 }
                 navItemsViews.size - 1 -> {
-                    set.addToHorizontalChainRTL(navItem.id, navItemsViews[index - 1].id, this.id)
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        ConstraintSet.PARENT_ID
+                    )
                 }
                 else -> {
                     set.addToHorizontalChainRTL(
@@ -321,8 +329,13 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                 }
             }
 
-            set.connect(navItem.id, ConstraintSet.TOP, this.id, ConstraintSet.TOP)
-            set.connect(navItem.id, ConstraintSet.BOTTOM, this.id, ConstraintSet.BOTTOM)
+            set.connect(navItem.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+            set.connect(
+                navItem.id,
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM
+            )
 
             set.applyTo(this)
         }
