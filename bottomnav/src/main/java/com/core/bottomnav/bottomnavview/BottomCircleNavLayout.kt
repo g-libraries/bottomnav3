@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import android.R
 import android.text.method.TextKeyListener.clear
 import android.R.layout
+import kotlin.random.Random
 
 
 class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
@@ -102,8 +103,9 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         val list = createViewsFromDataObjects(dataItemList) as ArrayList<View>
         this.navItemsViews = list
 
-        for (item in navItemsViews) {
-            this.addView(item)
+        for (view in navItemsViews) {
+            view.id = View.generateViewId()
+            this.addView(view)
         }
     }
 
