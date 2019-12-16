@@ -11,6 +11,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.core.bottomnav.BottomNavItemData
 import timber.log.Timber
 import java.util.ArrayList
+import androidx.constraintlayout.widget.ConstraintSet
+import android.R
+import android.text.method.TextKeyListener.clear
+import android.R.layout
+
 
 class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
@@ -86,7 +91,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
     fun init(dataItemList: List<BottomNavItemData>) {
         setItemList(dataItemList)
-        setConstraints()
+        setConstraints1()
     }
 
     /**
@@ -288,6 +293,35 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             params.topToTop = this.id
             params.bottomToBottom = this.id
+
+            navItem.requestLayout()
+        }
+    }
+
+    fun setConstraints1() {
+        for ((index, navItem) in navItemsViews.withIndex()) {
+            val set = ConstraintSet()
+
+            when (index) {
+                0 -> {
+                    set.addToHorizontalChain(navItem.id, this.id, navItemsViews[index + 1].id)
+                }
+                navItemsViews.size - 1 -> {
+                    set.addToHorizontalChain(navItem.id, navItemsViews[index - 1].id, this.id)
+                }
+                else -> {
+                    set.addToHorizontalChain(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        navItemsViews[index + 1].id
+                    )
+                }
+            }
+
+            set.connect(navItem.id, ConstraintSet.TOP, this.id, ConstraintSet.TOP)
+            set.connect(navItem.id, ConstraintSet.BOTTOM, this.id, ConstraintSet.BOTTOM)
+
+            set.applyTo(this)
 
             navItem.requestLayout()
         }
