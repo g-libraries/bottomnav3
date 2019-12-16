@@ -10,13 +10,13 @@ import java.lang.reflect.Type
  */
 
 data class BottomNavItemData(
-    val menuItemId: Int,
     val menuActionId: Int,
     val fragmentType: Type,
     val title: String,
     val titleTextActive: String,
     val titleTextInactive: String,
     val titleTextDisabled: String,
+    var menuItemId: Int? = null,
     val noInternetAvailable: Boolean = false,
     val noAuthAvailable: Boolean = false,
     val showNavBoolean: Boolean = true,
