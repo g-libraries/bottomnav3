@@ -303,6 +303,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     fun setConstraints1() {
         for ((index, navItem) in navItemsViews.withIndex()) {
             val set = ConstraintSet()
+            set.clone(this)
 
             when (index) {
                 0 -> {
@@ -324,8 +325,6 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             set.connect(navItem.id, ConstraintSet.BOTTOM, this.id, ConstraintSet.BOTTOM)
 
             set.applyTo(this)
-
-            navItem.requestLayout()
         }
     }
 }
