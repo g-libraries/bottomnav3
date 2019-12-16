@@ -1,5 +1,7 @@
 package com.core.bottomnav
 
+import android.view.View
+
 
 interface IBottomNavigator {
 
@@ -8,5 +10,6 @@ interface IBottomNavigator {
     fun showNavView(delayed: Boolean)
     fun internetChanged(online: Boolean)
     fun authorized(guest: Boolean)
+    fun setMenuItems(list: List<BottomNavItemData>)
 
 }

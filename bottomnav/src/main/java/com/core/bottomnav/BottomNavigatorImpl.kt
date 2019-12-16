@@ -22,8 +22,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         var navHostId: Int,
         var navViewId: Int,
         // Ids of views to disable/enable in various cases
-        val menuItems: List<BottomNavItemData>,
-        val noBottomNavItems: List<Type>,
+        var menuItems: List<BottomNavItemData>,
         // Menu itemViews alpha
         var alphaEnabled: Int = 255,
         var alphaDisabled: Int = 70
@@ -78,8 +77,8 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
 
             override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
                 super.onFragmentStarted(fm, f)
-                for (item in params.noBottomNavItems) {
-                    if (fragmentManager.getVisibleFragment() == item) {
+                for (item in params.menuItems.filterIndexed { _, item -> !item.showNavBoolean }) {
+                    if (item.fragmentType == fragmentManager.getVisibleFragment()) {
                         showNavStrategy =
                             ShowNavStrategy(
                                 showInstant
@@ -137,6 +136,10 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 start()
             }
         }
+    }
+
+    override fun setMenuItems(list: List<BottomNavItemData>) {
+        params.menuItems = list
     }
 
     // Internet and Auth status change logic
