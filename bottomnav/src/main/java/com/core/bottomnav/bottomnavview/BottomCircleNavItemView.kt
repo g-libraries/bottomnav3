@@ -74,7 +74,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
     fun init(
         bottomNavItemData: BottomNavItemData
     ) {
-        this.title = title
+        this.title = bottomNavItemData.title
         this.textColorActive = Color.parseColor(bottomNavItemData.titleTextActive)
         this.textColorInactive = Color.parseColor(bottomNavItemData.titleTextInactive)
         this.textColorDisable = Color.parseColor(bottomNavItemData.titleTextDisabled)
