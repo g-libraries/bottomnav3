@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.core.bottomnav.BottomNavItemData
 import com.core.bottomnav.R
 
 class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
@@ -24,7 +25,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
- //       init(attrs)
+        //       init(attrs)
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
@@ -32,7 +33,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         attrs,
         defStyleAttr
     ) {
-  //      init(attrs)
+        //      init(attrs)
     }
 
     constructor(
@@ -41,7 +42,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         defStyleAttr: Int,
         defStyleRes: Int
     ) : super(context, attrs, defStyleAttr, defStyleRes) {
-     //   init(attrs)
+        //   init(attrs)
     }
 
     var disabled = false
@@ -70,17 +71,35 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
     lateinit var iconView: ImageView
     lateinit var titleView: TextView
 
-    fun init(title: String, textColorActive: String, textColorInactive: String, textColorDisable: String) {
+    fun init(
+        bottomNavItemData: BottomNavItemData
+    ) {
         this.title = title
-        this.textColorActive = Color.parseColor(textColorActive)
-        this.textColorInactive = Color.parseColor(textColorInactive)
-        this.textColorDisable = Color.parseColor(textColorDisable)
+        this.textColorActive = Color.parseColor(bottomNavItemData.titleTextActive)
+        this.textColorInactive = Color.parseColor(bottomNavItemData.titleTextInactive)
+        this.textColorDisable = Color.parseColor(bottomNavItemData.titleTextDisabled)
+
+        activeIcon = getDrawableByResName(bottomNavItemData.imageNameActive)
+        inactiveIcon = getDrawableByResName(bottomNavItemData.imageNameInactive)
+        disabledIcon = getDrawableByResName(bottomNavItemData.imageNameDisabled)
 
         gravity = Gravity.CENTER
 
         createBubbleItemView(context)
         setState(false)
     }
+
+    //TODO to library
+    fun getDrawableByResName(resName: String): Drawable =
+        context.getDrawable(
+            context.resources.getIdentifier(
+                resName,
+                "drawable",
+                context.packageName
+            )
+        )!!
+
+
 
     fun init(attrs: AttributeSet?) {
         if (attrs != null) {
@@ -265,3 +284,4 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         this.title = title
     }
 }
+

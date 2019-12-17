@@ -113,7 +113,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         val viewsList = arrayListOf<BottomCircleNavItem>()
         for (itemData in dataItemList)
             if (itemData.isCircle)
-                viewsList.add(createCircleView())
+                viewsList.add(createCircleView(itemData))
             else
                 viewsList.add(createDefaultView(itemData))
 
@@ -123,18 +123,15 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     fun createDefaultView(itemData: BottomNavItemData): BottomCircleNavItemView {
         val itemView = BottomCircleNavItemView(context)
         itemView.init(
-            itemData.title,
-            itemData.titleTextActive,
-            itemData.titleTextInactive,
-            itemData.titleTextDisabled
+            itemData
         )
 
         return itemView
     }
 
-    fun createCircleView(): BottomCircleNavCircleView {
+    fun createCircleView(itemData: BottomNavItemData): BottomCircleNavCircleView {
         val itemView = BottomCircleNavCircleView(context)
-        itemView.init()
+        itemView.init(itemData)
 
         return itemView
     }

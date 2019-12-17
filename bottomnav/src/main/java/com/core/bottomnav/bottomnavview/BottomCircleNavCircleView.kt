@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.core.bottomnav.BottomNavItemData
 import com.core.bottomnav.R
 
 class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
@@ -61,9 +62,25 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
     var imgPadding = context.resources.getDimension(R.dimen._10sdp)
     var defPadding = context.resources.getDimension(R.dimen._10sdp)
 
-    fun init() {
+    fun init(
+        itemData:BottomNavItemData
+    ) {
+        activeIcon = getDrawableByResName(itemData.imageNameActive)
+        inactiveIcon = getDrawableByResName(itemData.imageNameInactive)
+        disabledIcon = getDrawableByResName(itemData.imageNameDisabled)
+
         createBubbleItemView(context)
     }
+
+    //TODO to library
+    fun getDrawableByResName(resName: String): Drawable =
+        context.getDrawable(
+            context.resources.getIdentifier(
+                resName,
+                "drawable",
+                context.packageName
+            )
+        )!!
 
     fun init(attrs: AttributeSet?) {
         active = false
