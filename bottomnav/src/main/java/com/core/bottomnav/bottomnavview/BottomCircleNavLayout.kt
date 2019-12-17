@@ -326,11 +326,11 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                 }
             }
 
-            set.connect(navItem.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
+            set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
             set.connect(
                 navItem.id,
                 ConstraintSet.BOTTOM,
-                ConstraintSet.PARENT_ID,
+                getChildAt(0).id,
                 ConstraintSet.BOTTOM
             )
 

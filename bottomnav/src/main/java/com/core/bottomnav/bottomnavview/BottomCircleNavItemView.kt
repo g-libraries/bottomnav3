@@ -71,9 +71,13 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
     lateinit var iconView: ImageView
     lateinit var titleView: TextView
 
+
+
     fun init(
         bottomNavItemData: BottomNavItemData
     ) {
+
+
         this.title = bottomNavItemData.title
         this.textColorActive = Color.parseColor(bottomNavItemData.titleTextActive)
         this.textColorInactive = Color.parseColor(bottomNavItemData.titleTextInactive)
