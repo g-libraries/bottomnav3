@@ -12,7 +12,7 @@ import java.lang.reflect.Type
 
 data class BottomNavItemData(
     @IdRes val menuActionId: Int,
-    @IdRes var menuNavFragmentId: Int,
+    @IdRes val menuNavFragmentId: Int,
     val fragmentType: Type,
     val title: String,
     val titleTextActive: String,
@@ -21,6 +21,7 @@ data class BottomNavItemData(
     val imageNameActive: String,
     val imageNameInactive: String,
     val imageNameDisabled: String,
+    var menuItemId: Int? = null,
     val noInternetAvailable: Boolean = false,
     val noAuthAvailable: Boolean = false,
     val showNavBoolean: Boolean = true,
