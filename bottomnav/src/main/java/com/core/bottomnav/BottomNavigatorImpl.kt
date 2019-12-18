@@ -53,7 +53,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         navigationView.bottomNavClickListener = object : OnBottomNavClickListener {
             override fun onClicked(pos: Int, id: Int): Boolean {
                 if (pos == navigationView.getCurrentActiveItemPosition()) return false
-                return if (guest && params.menuItems.find { it.menuItemId == id }?.noAuthAvailable!!) {
+                return if (guest && !params.menuItems.find { it.menuItemId == id }?.noAuthAvailable!!) {
                     navListener.invoke()
                     false
                 } else {
