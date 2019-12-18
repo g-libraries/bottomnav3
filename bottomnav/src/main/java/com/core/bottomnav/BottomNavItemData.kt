@@ -11,6 +11,7 @@ import java.lang.reflect.Type
 
 data class BottomNavItemData(
     val menuActionId: Int,
+    val menuFragmentId: Type,
     val fragmentType: Type,
     val title: String,
     val titleTextActive: String,
