@@ -77,35 +77,41 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
 
             override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
                 super.onFragmentStarted(fm, f)
-                for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                    if (item.fragmentType == fragmentManager.getVisibleFragment()!!::class) {
-                        showNavStrategy =
-                            ShowNavStrategy(
-                                showInstant
-                            )
+                fragmentManager.getVisibleFragment()?.let {
+                    for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
+                        if (item.fragmentType == it::class) {
+                            showNavStrategy =
+                                ShowNavStrategy(
+                                    showInstant
+                                )
 
-                        return
+                            return
+                        }
                     }
-                }
 
-                showNavStrategy =
-                    ShowNavStrategy(
-                        showInstant
-                    ) // Can set strategy to showDelayed for extra effects
-                hideNavView()
+
+                    showNavStrategy =
+                        ShowNavStrategy(
+                            showInstant
+                        ) // Can set strategy to showDelayed for extra effects
+                    hideNavView()
+                }
             }
+
 
             override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
                 super.onFragmentViewDestroyed(fm, f)
-                for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                    if (item.fragmentType == fragmentManager.getVisibleFragment()!!::class) {
-                        showNavStrategy.apply()
+                fragmentManager.getVisibleFragment()?.let {
+                    for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
+                        if (item.fragmentType == it::class) {
+                            showNavStrategy.apply()
 
-                        return
+                            return
+                        }
                     }
-                }
 
-                showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
+                    showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
+                }
 
             }
         }, true)
