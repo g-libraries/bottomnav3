@@ -79,7 +79,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 super.onFragmentStarted(fm, f)
                 fragmentManager.getVisibleFragment()?.let {
                     for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                        if (item.fragmentType == it::class) {
+                        if (item.fragmentType == it::class.java) {
                             showNavStrategy =
                                 ShowNavStrategy(
                                     showInstant
@@ -103,7 +103,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 super.onFragmentViewDestroyed(fm, f)
                 fragmentManager.getVisibleFragment()?.let {
                     for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                        if (item.fragmentType == it::class) {
+                        if (item.fragmentType == it::class.java) {
                             showNavStrategy.apply()
 
                             return
