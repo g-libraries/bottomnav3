@@ -100,7 +100,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
                     if (item.fragmentType == fragmentManager.getVisibleFragment()!!::class) {
                         showNavStrategy.apply()
-пш
+
                         return
                     }
                 }
