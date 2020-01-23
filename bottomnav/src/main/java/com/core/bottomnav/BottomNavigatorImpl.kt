@@ -7,9 +7,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.core.basicextensions.applyGlobalLayoutListener
 import com.core.bottomnav.bottomnavview.BottomCircleNavLayout
 import com.core.bottomnav.bottomnavview.OnBottomNavClickListener
@@ -20,13 +22,17 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     data class Params(
         var navHostId: Int,
         var navViewId: Int,
+        var startHidden: Boolean = false,
         // Ids of views to disable/enable in various cases
         var navMenuIds: Map<Int, Int>, // Map<Nav Menu item id, Nav Menu Navigation action id>
         var noInternetIds: ArrayList<Int>,
         var notAuthIds: ArrayList<Int>,
         // Menu itemViews alpha
         var alphaEnabled: Int = 255,
-        var alphaDisabled: Int = 70
+        var alphaDisabled: Int = 70,
+        // Params for alternate navigation path
+        var navigationId: Int = -1,
+        var alternateStartDestinationId: Int = -1
     )
 
     protected var showNavStrategy =
@@ -65,6 +71,15 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 }
             }
         }
+
+        if (params.alternateStartDestinationId > 0) {
+            val inflater = this.navigationController.navInflater
+            val graph = inflater.inflate(params.navigationId)
+            graph.startDestination = params.alternateStartDestinationId
+            this.navigationController.graph = graph
+        }
+
+        if (params.startHidden) hideNavView()
 
         navigationView.applyGlobalLayoutListener { navH = navigationView.height }
     }
