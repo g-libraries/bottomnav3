@@ -326,13 +326,18 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                 }
             }
 
-            set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
-            set.connect(
-                navItem.id,
-                ConstraintSet.BOTTOM,
-                getChildAt(0).id,
-                ConstraintSet.BOTTOM
-            )
+            if (navItem is BottomCircleNavCircleView)
+                set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
+            else {
+                set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
+
+                set.connect(
+                    navItem.id,
+                    ConstraintSet.BOTTOM,
+                    getChildAt(0).id,
+                    ConstraintSet.BOTTOM
+                )
+            }
 
             set.applyTo(this)
         }
