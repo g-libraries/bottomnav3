@@ -328,7 +328,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.centerHorizontallyRtl(navItem.id, ConstraintSet.PARENT_ID)
+                set.centerHorizontally(navItem.id, ConstraintSet.PARENT_ID)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
