@@ -302,33 +302,35 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             val set = ConstraintSet()
             set.clone(this)
 
-            when (index) {
-                0 -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        ConstraintSet.PARENT_ID,
-                        navItemsViews[index + 1].id
-                    )
-                }
-                navItemsViews.size - 1 -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        navItemsViews[index - 1].id,
-                        ConstraintSet.PARENT_ID
-                    )
-                }
-                else -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        navItemsViews[index - 1].id,
-                        navItemsViews[index + 1].id
-                    )
-                }
-            }
-
-            if (navItem is BottomCircleNavCircleView)
+            if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-            else {
+                set.connect(navItem.id, ConstraintSet.START, id, ConstraintSet.START)
+                set.connect(navItem.id, ConstraintSet.END, id, ConstraintSet.END)
+            } else {
+                when (index) {
+                    0 -> {
+                        set.addToHorizontalChainRTL(
+                            navItem.id,
+                            ConstraintSet.PARENT_ID,
+                            navItemsViews[index + 1].id
+                        )
+                    }
+                    navItemsViews.size - 1 -> {
+                        set.addToHorizontalChainRTL(
+                            navItem.id,
+                            navItemsViews[index - 1].id,
+                            ConstraintSet.PARENT_ID
+                        )
+                    }
+                    else -> {
+                        set.addToHorizontalChainRTL(
+                            navItem.id,
+                            navItemsViews[index - 1].id,
+                            navItemsViews[index + 1].id
+                        )
+                    }
+                }
+
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
                 set.connect(
