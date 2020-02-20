@@ -302,52 +302,34 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             val set = ConstraintSet()
             set.clone(this)
 
-            if (navItem is BottomCircleNavCircleView) {
-                set.connect(
-                    navItem.id,
-                    ConstraintSet.TOP,
-                    ConstraintSet.PARENT_ID,
-                    ConstraintSet.TOP
-                )
-
-                set.connect(
-                    navItem.id,
-                    ConstraintSet.START,
-                    ConstraintSet.PARENT_ID,
-                    ConstraintSet.START
-                )
-
-                set.connect(
-                    navItem.id,
-                    ConstraintSet.END,
-                    ConstraintSet.PARENT_ID,
-                    ConstraintSet.END
-                )
-            } else {
-                when (index) {
-                    0 -> {
-                        set.addToHorizontalChainRTL(
-                            navItem.id,
-                            ConstraintSet.PARENT_ID,
-                            navItemsViews[index + 1].id
-                        )
-                    }
-                    navItemsViews.size - 1 -> {
-                        set.addToHorizontalChainRTL(
-                            navItem.id,
-                            navItemsViews[index - 1].id,
-                            ConstraintSet.PARENT_ID
-                        )
-                    }
-                    else -> {
-                        set.addToHorizontalChainRTL(
-                            navItem.id,
-                            navItemsViews[index - 1].id,
-                            navItemsViews[index + 1].id
-                        )
-                    }
+            when (index) {
+                0 -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        ConstraintSet.PARENT_ID,
+                        navItemsViews[index + 1].id
+                    )
                 }
+                navItemsViews.size - 1 -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        ConstraintSet.PARENT_ID
+                    )
+                }
+                else -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        navItemsViews[index + 1].id
+                    )
+                }
+            }
 
+            if (navItem is BottomCircleNavCircleView) {
+                set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
+                set.centerHorizontallyRtl(navItem.id, ConstraintSet.PARENT_ID)
+            } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
                 set.connect(
