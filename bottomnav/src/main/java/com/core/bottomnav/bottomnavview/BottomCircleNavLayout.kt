@@ -303,9 +303,26 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             set.clone(this)
 
             if (navItem is BottomCircleNavCircleView) {
-                set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.connect(navItem.id, ConstraintSet.START, id, ConstraintSet.START)
-                set.connect(navItem.id, ConstraintSet.END, id, ConstraintSet.END)
+                set.connect(
+                    navItem.id,
+                    ConstraintSet.TOP,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.TOP
+                )
+
+                set.connect(
+                    navItem.id,
+                    ConstraintSet.START,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.START
+                )
+
+                set.connect(
+                    navItem.id,
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.END
+                )
             } else {
                 when (index) {
                     0 -> {
