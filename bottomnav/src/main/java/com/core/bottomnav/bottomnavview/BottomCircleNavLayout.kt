@@ -299,7 +299,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         ConstraintSet.PARENT_ID,
                         navItemsViews[index + 1].id
                     )
-                    set.setMargin(navItem.id, ConstraintSet.START, 24.toDp)
+                    set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
                 }
                 navItemsViews.size - 1 -> {
 
@@ -309,7 +309,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         ConstraintSet.PARENT_ID
                     )
 
-                    set.setMargin(navItem.id, ConstraintSet.END, 24.toDp)
+                    set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
                 }
                 else -> {
                     set.addToHorizontalChainRTL(
