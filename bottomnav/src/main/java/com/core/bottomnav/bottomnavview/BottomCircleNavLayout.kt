@@ -92,7 +92,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
     fun init(dataItemList: List<BottomNavItemData>) {
         setItemList(dataItemList)
-        setConstraints1()
+        setConstraints()
     }
 
     /**
@@ -105,6 +105,12 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
         for (view in navItemsViews) {
             view.id = View.generateViewId()
+
+            layoutParams = view.layoutParams
+            layoutParams.width = 0
+
+            view.layoutParams = layoutParams
+
             this.addView(view)
         }
     }
@@ -273,54 +279,40 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
     fun setConstraints() {
         for ((index, navItem) in navItemsViews.withIndex()) {
-            val params = navItem.layoutParams as ConstraintLayout.LayoutParams
-            when (index) {
-                0 -> {
-                    params.leftToLeft = this.id
-                    params.rightToLeft = navItemsViews[index + 1].id
-                }
-                navItemsViews.size - 1 -> {
-                    params.rightToRight = this.id
-                    params.leftToRight = navItemsViews[index - 1].id
-                }
-                else -> {
-                    params.rightToLeft = navItemsViews[index + 1].id
-                    params.leftToRight = navItemsViews[index - 1].id
-
-                }
-            }
-
-            params.topToTop = this.id
-            params.bottomToBottom = this.id
-
-            navItem.requestLayout()
-        }
-    }
-
-    fun setConstraints1() {
-        val biasStep = 1f / navItemsViews.size
-
-        for ((index, navItem) in navItemsViews.withIndex()) {
             val set = ConstraintSet()
             set.clone(this)
 
-            set.connect(
-                navItem.id,
-                ConstraintSet.START,
-                ConstraintSet.PARENT_ID,
-                ConstraintSet.START
-            )
-            set.connect(navItem.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
-
-            if (index == 0)
-                set.setHorizontalBias(navItem.id, 0.1f)
-            else
-                set.setHorizontalBias(navItem.id, (biasStep * index) + 0.1f)
+            when (index) {
+                0 -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        ConstraintSet.PARENT_ID,
+                        navItemsViews[index + 1].id
+                    )
+                }
+                navItemsViews.size - 1 -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        ConstraintSet.PARENT_ID
+                    )
+                }
+                else -> {
+                    set.addToHorizontalChainRTL(
+                        navItem.id,
+                        navItemsViews[index - 1].id,
+                        navItemsViews[index + 1].id
+                    )
+                }
+            }
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
+                set.setHorizontalWeight(navItem.id, 2f)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
+
+                set.setHorizontalWeight(navItem.id, 1f)
 
                 set.connect(
                     navItem.id,
