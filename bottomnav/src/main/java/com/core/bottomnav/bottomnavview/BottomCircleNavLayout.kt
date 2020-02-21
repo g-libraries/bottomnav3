@@ -128,7 +128,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             itemData
         )
 
-        itemView.layoutParams = setZeroWidth(itemView)
+        itemView.layoutParams = setZeroWidth()
 
         return itemView
     }
@@ -137,17 +137,18 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         val itemView = BottomCircleNavCircleView(context)
         itemView.init(itemData)
 
-        itemView.layoutParams = setZeroWidth(itemView)
+        itemView.layoutParams = setZeroWidth()
 
         return itemView
     }
 
-    fun setZeroWidth(view: View): ViewGroup.LayoutParams {
+    fun setZeroWidth(): ViewGroup.LayoutParams {
+        val params = ViewGroup.LayoutParams(
+            0,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
-        layoutParams = view.layoutParams
-        layoutParams.width = 0
-
-        return layoutParams
+        return params
     }
 
     /**
