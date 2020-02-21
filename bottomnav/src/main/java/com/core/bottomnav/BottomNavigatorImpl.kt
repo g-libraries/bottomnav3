@@ -21,6 +21,8 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     data class Params(
         var navHostId: Int,
         var navViewId: Int,
+        //View for creating overlay effect
+        var fakeNavViewId: Int,
         // Ids of views to disable/enable in various cases
         var menuItems: List<BottomNavItemData>,
         // Menu itemViews alpha
@@ -31,6 +33,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     protected var showNavStrategy =
         ShowNavStrategy { showInstant }
     private lateinit var navigationView: BottomCircleNavLayout
+    private lateinit var fakeNavView: View
     private lateinit var navigationController: NavController
 
     private var navH: Int = 0
@@ -41,6 +44,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
     override fun attach(navListener: () -> Unit) {
         this.navigationController = activity.findNavController(params.navHostId)
         this.navigationView = activity.findViewById(params.navViewId)
+        this.fakeNavView = activity.findViewById(params.fakeNavViewId)
 
         (activity as AppCompatActivity).supportFragmentManager.findFragmentById(params.navHostId)
             ?.let {
@@ -127,11 +131,13 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
 
     override fun hideNavView() {
         navigationView.visibility = View.GONE
+        fakeNavView.visibility = View.GONE
     }
 
     override fun showNavView(delayed: Boolean) {
         if (!delayed) {
             navigationView.visibility = View.VISIBLE
+            fakeNavView.visibility = View.VISIBLE
         } else {
             navigationView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
             val animator = ValueAnimator.ofFloat(0.01f, 1f)
@@ -140,6 +146,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                     val newH = (navH.times(updatedAnimation.animatedValue as Float)).toInt()
                     if (updatedAnimation.animatedValue == 0.01f) {
                         navigationView.visibility = View.VISIBLE
+                        fakeNavView.visibility = View.VISIBLE
                         navigationView.setLayerType(View.LAYER_TYPE_NONE, null)
                     }
                     navigationView.layoutParams.height = newH
