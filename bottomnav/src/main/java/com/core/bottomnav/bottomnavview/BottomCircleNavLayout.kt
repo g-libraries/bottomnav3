@@ -315,7 +315,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             if (index == 0)
                 set.setHorizontalBias(navItem.id, 0.1f)
             else
-                set.setHorizontalBias(navItem.id, (biasStep * (index + 1)) + 0.1f)
+                set.setHorizontalBias(navItem.id, (biasStep * index) + 0.1f)
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
