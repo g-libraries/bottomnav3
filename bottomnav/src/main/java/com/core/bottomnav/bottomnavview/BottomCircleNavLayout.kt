@@ -16,6 +16,7 @@ import android.R
 import android.text.method.TextKeyListener.clear
 import android.R.layout
 import android.view.ViewGroup
+import com.core.base.util.toDp
 import kotlin.random.Random
 
 
@@ -293,6 +294,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             when (index) {
                 0 -> {
+                    set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
                     set.addToHorizontalChainRTL(
                         navItem.id,
                         ConstraintSet.PARENT_ID,
@@ -300,6 +302,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                     )
                 }
                 navItemsViews.size - 1 -> {
+                    set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
                     set.addToHorizontalChainRTL(
                         navItem.id,
                         navItemsViews[index - 1].id,
