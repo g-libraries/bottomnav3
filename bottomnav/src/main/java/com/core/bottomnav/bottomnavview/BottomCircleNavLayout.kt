@@ -317,7 +317,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.setHorizontalWeight(navItem.id, 2f)
+                set.setHorizontalWeight(navItem.id, 1.3f)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
