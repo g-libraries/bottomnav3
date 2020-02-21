@@ -298,37 +298,19 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     }
 
     fun setConstraints1() {
+        val biasStep = 1f / navItemsViews.size
+
         for ((index, navItem) in navItemsViews.withIndex()) {
             val set = ConstraintSet()
             set.clone(this)
 
-            when (index) {
-                0 -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        ConstraintSet.PARENT_ID,
-                        navItemsViews[index + 1].id
-                    )
-                }
-                navItemsViews.size - 1 -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        navItemsViews[index - 1].id,
-                        ConstraintSet.PARENT_ID
-                    )
-                }
-                else -> {
-                    set.addToHorizontalChainRTL(
-                        navItem.id,
-                        navItemsViews[index - 1].id,
-                        navItemsViews[index + 1].id
-                    )
-                }
-            }
+            set.connect(navItem.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            set.connect(navItem.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+
+            set.setHorizontalBias(navItem.id, biasStep)
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.centerHorizontally(navItem.id, ConstraintSet.PARENT_ID)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
