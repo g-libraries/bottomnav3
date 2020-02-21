@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import android.R
 import android.text.method.TextKeyListener.clear
 import android.R.layout
+import android.view.ViewGroup
 import kotlin.random.Random
 
 
@@ -106,11 +107,6 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         for (view in navItemsViews) {
             view.id = View.generateViewId()
 
-            layoutParams = view.layoutParams
-            layoutParams.width = 0
-
-            view.layoutParams = layoutParams
-
             this.addView(view)
         }
     }
@@ -132,6 +128,8 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             itemData
         )
 
+        itemView.layoutParams = setZeroWidth(itemView)
+
         return itemView
     }
 
@@ -139,7 +137,17 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         val itemView = BottomCircleNavCircleView(context)
         itemView.init(itemData)
 
+        itemView.layoutParams = setZeroWidth(itemView)
+
         return itemView
+    }
+
+    fun setZeroWidth(view: View): ViewGroup.LayoutParams {
+
+        layoutParams = view.layoutParams
+        layoutParams.width = 0
+
+        return layoutParams
     }
 
     /**
