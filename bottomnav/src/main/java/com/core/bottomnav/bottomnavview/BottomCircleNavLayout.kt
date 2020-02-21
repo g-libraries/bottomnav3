@@ -298,7 +298,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     }
 
     fun setConstraints1() {
-        val biasStep = 0.8f / navItemsViews.size
+        val biasStep = 0.9f / navItemsViews.size
 
         for ((index, navItem) in navItemsViews.withIndex()) {
             val set = ConstraintSet()
