@@ -123,7 +123,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination is FragmentNavigator.Destination)
                 for ((index, item) in params.menuItems.withIndex())
-                    if (item.fragmentType::class.java.name == destination.className) selectMenuItem(
+                    if (item.fragmentType.javaClass.kotlin.qualifiedName == destination.className) selectMenuItem(
                         index
                     )
         }
