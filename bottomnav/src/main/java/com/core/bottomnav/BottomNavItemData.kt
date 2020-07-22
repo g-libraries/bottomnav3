@@ -2,6 +2,7 @@ package com.core.bottomnav
 
 import androidx.annotation.IdRes
 import java.lang.reflect.Type
+import kotlin.reflect.KClass
 
 /**
  *  @param menuItemId = R.id.mainFragment
@@ -13,7 +14,7 @@ import java.lang.reflect.Type
 data class BottomNavItemData(
     @IdRes val menuActionId: Int,
     @IdRes val menuNavFragmentId: Int,
-    val fragmentType: Type,
+    val fragmentType: KClass<Any>,
     val title: String,
     val titleTextActive: String,
     val titleTextInactive: String,
