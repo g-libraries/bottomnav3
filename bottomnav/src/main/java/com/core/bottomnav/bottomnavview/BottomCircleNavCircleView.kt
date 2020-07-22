@@ -63,7 +63,7 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
     var defPadding = context.resources.getDimension(R.dimen._10sdp)
 
     fun init(
-        itemData:BottomNavItemData
+        itemData:BottomNavItemData<Any>
     ) {
         activeIcon = getDrawableByResName(itemData.imageNameActive)
         inactiveIcon = getDrawableByResName(itemData.imageNameInactive)

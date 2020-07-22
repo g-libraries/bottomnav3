@@ -92,7 +92,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         post { updateChildNavItems() }
     }
 
-    fun init(dataItemList: List<BottomNavItemData>) {
+    fun init(dataItemList: List<BottomNavItemData<Any>>) {
         setItemList(dataItemList)
         setConstraints()
     }
@@ -101,7 +101,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
      * Set nav items
      */
 
-    fun setItemList(dataItemList: List<BottomNavItemData>) {
+    fun setItemList(dataItemList: List<BottomNavItemData<Any>>) {
         val list = createViewsFromDataObjects(dataItemList) as ArrayList<View>
         this.navItemsViews = list
 
@@ -112,7 +112,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         }
     }
 
-    fun createViewsFromDataObjects(dataItemList: List<BottomNavItemData>): ArrayList<BottomCircleNavItem> {
+    fun createViewsFromDataObjects(dataItemList: List<BottomNavItemData<Any>>): ArrayList<BottomCircleNavItem> {
         val viewsList = arrayListOf<BottomCircleNavItem>()
         for (itemData in dataItemList)
             if (itemData.isCircle)
@@ -123,7 +123,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         return viewsList
     }
 
-    fun createDefaultView(itemData: BottomNavItemData): BottomCircleNavItemView {
+    fun createDefaultView(itemData: BottomNavItemData<Any>): BottomCircleNavItemView {
         val itemView = BottomCircleNavItemView(context)
         itemView.init(
             itemData
@@ -134,7 +134,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         return itemView
     }
 
-    fun createCircleView(itemData: BottomNavItemData): BottomCircleNavCircleView {
+    fun createCircleView(itemData: BottomNavItemData<Any>): BottomCircleNavCircleView {
         val itemView = BottomCircleNavCircleView(context)
         itemView.init(itemData)
 

@@ -74,7 +74,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
 
     fun init(
-        bottomNavItemData: BottomNavItemData
+        bottomNavItemData: BottomNavItemData<Any>
     ) {
 
 
