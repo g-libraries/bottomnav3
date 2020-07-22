@@ -10,6 +10,6 @@ interface IBottomNavigator {
     fun showNavView(delayed: Boolean)
     fun internetChanged(online: Boolean)
     fun authorized(guest: Boolean)
-    fun setMenuItems(list: List<BottomNavItemData>)
+    fun setMenuItems(list: List<BottomNavItemData<Any>>)
 
 }

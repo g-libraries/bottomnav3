@@ -24,7 +24,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         //View for creating overlay effect
         var fakeNavViewId: Int,
         // Ids of views to disable/enable in various cases
-        var menuItems: List<BottomNavItemData>,
+        var menuItems: List<BottomNavItemData<Any>>,
         // Menu itemViews alpha
         var alphaEnabled: Int = 255,
         var alphaDisabled: Int = 70
@@ -157,7 +157,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         }
     }
 
-    override fun setMenuItems(list: List<BottomNavItemData>) {
+    override fun setMenuItems(list: List<BottomNavItemData<Any>>) {
         params.menuItems = list
     }
 
@@ -194,7 +194,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         )
     }
 
-    private fun disableMenuItems(list: List<BottomNavItemData>, enabled: Boolean = true) {
+    private fun disableMenuItems(list: List<BottomNavItemData<Any>>, enabled: Boolean = true) {
         for (item in list) {
             navigationView.navItems.find { it.getId() == item.menuItemId }?.let {
                 it.disable(enabled)
