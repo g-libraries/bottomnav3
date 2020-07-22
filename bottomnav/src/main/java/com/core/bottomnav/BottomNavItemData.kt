@@ -11,10 +11,10 @@ import kotlin.reflect.KClass
  *  @param noAuthAvailable = true if available
  */
 
-data class BottomNavItemData(
+data class BottomNavItemData<T : Any>(
     @IdRes val menuActionId: Int,
     @IdRes val menuNavFragmentId: Int,
-    val fragmentType: KClass<Any>,
+    val fragmentType: KClass<T>,
     val title: String,
     val titleTextActive: String,
     val titleTextInactive: String,
