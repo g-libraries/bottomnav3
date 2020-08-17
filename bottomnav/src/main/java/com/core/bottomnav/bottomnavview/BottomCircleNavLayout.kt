@@ -299,17 +299,19 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         ConstraintSet.PARENT_ID,
                         navItemsViews[index + 1].id
                     )
-                    set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
+                    if (navItemsViews.size > 3) {
+                        set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
+                    }
                 }
                 navItemsViews.size - 1 -> {
-
                     set.addToHorizontalChainRTL(
                         navItem.id,
                         navItemsViews[index - 1].id,
                         ConstraintSet.PARENT_ID
                     )
-
-                    set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
+                    if (navItemsViews.size > 3) {
+                        set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
+                    }
                 }
                 else -> {
                     set.addToHorizontalChainRTL(
