@@ -83,7 +83,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 super.onFragmentStarted(fm, f)
                 fragmentManager.getVisibleFragment()?.let {
                     for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                        if (item.fragmentType.javaClass.simpleName == it::class.java.simpleName) {
+                        if (item.fragmentType == it::class.java) {
                             showNavStrategy =
                                 ShowNavStrategy(
                                     showInstant
@@ -107,7 +107,7 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 super.onFragmentViewDestroyed(fm, f)
                 fragmentManager.getVisibleFragment()?.let {
                     for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                        if (item.fragmentType.javaClass.simpleName == it::class.java.simpleName) {
+                        if (item.fragmentType == it::class.java) {
                             showNavStrategy.apply()
 
                             return
@@ -116,14 +116,13 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
 
                     showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
                 }
-
             }
         }, true)
 
         navigationController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination is FragmentNavigator.Destination)
                 for ((index, item) in params.menuItems.withIndex())
-                    if (item.fragmentType.javaClass.simpleName == destination::class.java.simpleName) selectMenuItem(
+                    if (item.fragmentType == destination::class.java) selectMenuItem(
                         index
                     )
         }
