@@ -14,7 +14,7 @@ import kotlin.reflect.KClass
 data class BottomNavItemData(
     @IdRes val menuActionId: Int,
     @IdRes val menuNavFragmentId: Int,
-    val fragmentType: KClass<Any>,
+    val fragmentType: Type,
     val title: String,
     val titleTextActive: String,
     val titleTextInactive: String,
