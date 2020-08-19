@@ -26,4 +26,8 @@
         <attr name="ci_imgPadding" format="dimension" />
         <attr name="ci_padding" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="BottomCircleNavLayout">
+        <attr name="ci_default_item" format="dimension" />
+    </declare-styleable>
 </resources>

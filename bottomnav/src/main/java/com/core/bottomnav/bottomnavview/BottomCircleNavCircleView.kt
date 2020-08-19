@@ -127,6 +127,8 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
                 )
                 active = ta.getBoolean(R.styleable.BottomCircleNavCircleView_ci_active, false)
 
+
+
             } finally {
                 ta.recycle()
             }

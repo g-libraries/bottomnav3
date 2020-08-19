@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.core.base.util.toDp
 import com.core.bottomnav.BottomNavItemData
+import com.core.bottomnav.R
 import timber.log.Timber
 import java.util.*
 
@@ -83,7 +84,16 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
      * @param attrs   custom attributes
      */
     private fun init(context: Context, attrs: AttributeSet?) {
-
+        if (attrs != null) {
+            val ta =
+                context.obtainStyledAttributes(attrs, R.styleable.BottomCircleNavLayout, 0, 0)
+            try {
+                currentActiveItemPosition =
+                    ta.getDimension(R.styleable.BottomCircleNavLayout_ci_default_item, 0f).toInt()
+            } finally {
+                ta.recycle()
+            }
+        }
         post { updateChildNavItems() }
     }
 
