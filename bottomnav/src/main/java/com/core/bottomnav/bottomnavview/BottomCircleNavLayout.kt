@@ -89,7 +89,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                 context.obtainStyledAttributes(attrs, R.styleable.BottomCircleNavLayout, 0, 0)
             try {
                 currentActiveItemPosition =
-                    ta.getDimension(R.styleable.BottomCircleNavLayout_ci_default_item, 0f).toInt()
+                    ta.getInt(R.styleable.BottomCircleNavLayout_ci_default_item, 0)
             } finally {
                 ta.recycle()
             }

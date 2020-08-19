@@ -28,6 +28,6 @@
     </declare-styleable>
 
     <declare-styleable name="BottomCircleNavLayout">
-        <attr name="ci_default_item" format="dimension" />
+        <attr name="ci_default_item" format="integer" />
     </declare-styleable>
 </resources>
