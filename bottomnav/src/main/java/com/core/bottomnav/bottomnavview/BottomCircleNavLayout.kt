@@ -6,18 +6,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
+import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import com.core.base.util.toDp
 import com.core.bottomnav.BottomNavItemData
 import timber.log.Timber
-import java.util.ArrayList
-import androidx.constraintlayout.widget.ConstraintSet
-import android.R
-import android.text.method.TextKeyListener.clear
-import android.R.layout
-import android.view.ViewGroup
-import com.core.base.util.toDp
-import kotlin.random.Random
+import java.util.*
 
 
 class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
@@ -299,9 +294,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         ConstraintSet.PARENT_ID,
                         navItemsViews[index + 1].id
                     )
-                    if (navItemsViews.size > 3) {
-                        set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
-                    }
+                    set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
                 }
                 navItemsViews.size - 1 -> {
                     set.addToHorizontalChainRTL(
@@ -309,9 +302,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         navItemsViews[index - 1].id,
                         ConstraintSet.PARENT_ID
                     )
-                    if (navItemsViews.size > 3) {
-                        set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
-                    }
+                    set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
                 }
                 else -> {
                     set.addToHorizontalChainRTL(
@@ -324,7 +315,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.setHorizontalWeight(navItem.id, 1.3f)
+                set.setHorizontalWeight(navItem.id, if (navItemsViews.size > 3) 1.3f else 1f)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 
