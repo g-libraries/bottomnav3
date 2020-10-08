@@ -187,6 +187,9 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
         addView(iconView)
         addView(badgeIconView)
 
+        badgeIconView.applyGlobalLayoutListener {
+            badgeIconView.translationX = (it!!.width / 4).toFloat()
+        }
     }
 
 

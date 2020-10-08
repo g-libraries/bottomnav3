@@ -215,8 +215,6 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         lpBadgeIcon.addRule(ALIGN_TOP, iconView.id)
         lpBadgeIcon.addRule(ALIGN_END, iconView.id)
 
-        lpBadgeIcon.setMargins(0, -50, -50, 0)
-
         lpTitle.addRule(CENTER_HORIZONTAL, TRUE)
         lpTitle.addRule(BELOW, iconView.id)
 
@@ -237,10 +235,8 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         addView(badgeIconView)
 
         badgeIconView.applyGlobalLayoutListener {
-            badgeIconView.translationX = (it!!.width / 3).toFloat()
-            badgeIconView.translationY = (it.height / 3).toFloat()
+            badgeIconView.translationX = (it!!.width / 4).toFloat()
         }
-
 
         //set the initial state
         setState(active)
