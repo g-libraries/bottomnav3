@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.core.base.util.applyGlobalLayoutListener
 import com.core.bottomnav.BottomNavItemData
 import com.core.bottomnav.R
 
@@ -232,6 +233,11 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         addView(iconView)
         addView(titleView)
         addView(badgeIconView)
+
+        badgeIconView.applyGlobalLayoutListener {
+            badgeIconView.translationX = (it!!.width / 3).toFloat()
+            badgeIconView.translationY = (it.height / 3).toFloat()
+        }
 
 
         //set the initial state
