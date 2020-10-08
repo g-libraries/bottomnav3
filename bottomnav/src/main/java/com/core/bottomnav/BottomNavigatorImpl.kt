@@ -16,8 +16,7 @@ import com.core.bottomnav.bottomnavview.OnBottomNavClickListener
 import java.lang.reflect.Type
 
 abstract class BottomNavigatorImpl constructor(var activity: Activity, var params: Params) :
-
-     {
+    IBottomNavigator {
 
     data class Params(
         var navHostId: Int,
