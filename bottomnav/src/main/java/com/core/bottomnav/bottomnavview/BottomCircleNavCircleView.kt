@@ -176,8 +176,8 @@ class BottomCircleNavCircleView : RelativeLayout, BottomCircleNavItem {
             LayoutParams.WRAP_CONTENT
         )
 
-        lpBadgeIcon.addRule(ALIGN_PARENT_TOP, TRUE)
-        lpBadgeIcon.addRule(ALIGN_PARENT_END, TRUE)
+        lpBadgeIcon.addRule(ALIGN_TOP, iconView.id)
+        lpBadgeIcon.addRule(ALIGN_END, iconView.id)
 
         iconView.layoutParams = lpIcon
         badgeIconView.layoutParams = lpBadgeIcon

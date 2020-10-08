@@ -190,6 +190,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         badgeIconView = ImageView(context)
         badgeIconView.id = ViewCompat.generateViewId()
         badgeIconView.setImageDrawable(badgeIcon)
+        badgeIconView.visibility = View.GONE
 
         //create the nav title
         titleView = TextView(context)
@@ -210,15 +211,8 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
             LayoutParams.WRAP_CONTENT
         )
 
-        lpBadgeIcon.addRule(ALIGN_PARENT_TOP, TRUE)
-        lpBadgeIcon.addRule(ALIGN_PARENT_END, TRUE)
-
-//        lpBadgeIcon.setMargins(
-//            0,
-//            context.resources.getDimension(R.dimen._2sdp).toInt(),
-//            context.resources.getDimension(R.dimen._2sdp).toInt(),
-//            0
-//        )
+        lpBadgeIcon.addRule(ALIGN_TOP, iconView.id)
+        lpBadgeIcon.addRule(ALIGN_END, iconView.id)
 
         lpTitle.addRule(CENTER_HORIZONTAL, TRUE)
         lpTitle.addRule(BELOW, iconView.id)
@@ -238,6 +232,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         addView(iconView)
         addView(titleView)
         addView(badgeIconView)
+
 
         //set the initial state
         setState(active)

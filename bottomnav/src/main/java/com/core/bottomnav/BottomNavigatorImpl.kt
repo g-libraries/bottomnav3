@@ -201,8 +201,8 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         }
     }
 
-    override fun setBadgeToItem(menuActionId: Int, amount: Int) {
-        navigationView.setBadgeToItem(menuActionId, amount)
+    override fun setBadgeToItem(menuNavFragmentId: Int, amount: Int) {
+        navigationView.setBadgeToItem(menuNavFragmentId, amount)
     }
 
     // Strategy for Navigation view show animation

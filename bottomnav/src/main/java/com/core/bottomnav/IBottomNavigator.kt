@@ -11,7 +11,7 @@ interface IBottomNavigator {
     fun showNavView(delayed: Boolean)
     fun internetChanged(online: Boolean)
     fun authorized(guest: Boolean)
-    fun setBadgeToItem(@IdRes menuActionId: Int, amount: Int)
+    fun setBadgeToItem(@IdRes menuNavFragmentId: Int, amount: Int)
     fun setMenuItems(list: List<BottomNavItemData>)
 
 }

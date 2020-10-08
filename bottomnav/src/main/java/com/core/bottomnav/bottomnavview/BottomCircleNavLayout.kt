@@ -117,9 +117,9 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         }
     }
 
-    fun setBadgeToItem(@IdRes menuActionId: Int, amount: Int) {
+    fun setBadgeToItem(@IdRes menuNavFragmentId: Int, amount: Int) {
         for((index, item) in navDataItems.withIndex()) {
-            if(item.menuActionId == menuActionId) {
+            if(item.menuNavFragmentId == menuNavFragmentId) {
                 navItems[index].setAmountOfNotifications(amount)
 
                 break
