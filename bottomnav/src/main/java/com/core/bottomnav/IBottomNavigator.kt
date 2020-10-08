@@ -1,6 +1,7 @@
 package com.core.bottomnav
 
 import android.view.View
+import androidx.annotation.IdRes
 
 
 interface IBottomNavigator {
@@ -10,6 +11,7 @@ interface IBottomNavigator {
     fun showNavView(delayed: Boolean)
     fun internetChanged(online: Boolean)
     fun authorized(guest: Boolean)
+    fun setBadgeToItem(@IdRes menuActionId: Int, amount: Int)
     fun setMenuItems(list: List<BottomNavItemData>)
 
 }

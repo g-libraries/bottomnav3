@@ -16,7 +16,8 @@ import com.core.bottomnav.bottomnavview.OnBottomNavClickListener
 import java.lang.reflect.Type
 
 abstract class BottomNavigatorImpl constructor(var activity: Activity, var params: Params) :
-    IBottomNavigator {
+
+     {
 
     data class Params(
         var navHostId: Int,
@@ -199,6 +200,10 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                 it.disable(enabled)
             }
         }
+    }
+
+    override fun setBadgeToItem(menuActionId: Int, amount: Int) {
+        navigationView.setBadgeToItem(menuActionId, amount)
     }
 
     // Strategy for Navigation view show animation
