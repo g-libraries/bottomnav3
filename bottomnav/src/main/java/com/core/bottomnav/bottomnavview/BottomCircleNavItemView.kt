@@ -215,6 +215,8 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         lpBadgeIcon.addRule(ALIGN_TOP, iconView.id)
         lpBadgeIcon.addRule(ALIGN_END, iconView.id)
 
+        lpBadgeIcon.setMargins(0, -50, -50, 0)
+
         lpTitle.addRule(CENTER_HORIZONTAL, TRUE)
         lpTitle.addRule(BELOW, iconView.id)
 
