@@ -6,14 +6,19 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import com.core.base.util.toDp
 import com.core.bottomnav.BottomNavItemData
-import com.core.bottomnav.R
 import timber.log.Timber
-import java.util.*
+import java.util.ArrayList
+import androidx.constraintlayout.widget.ConstraintSet
+import android.R
+import android.text.method.TextKeyListener.clear
+import android.R.layout
+import android.view.ViewGroup
+import androidx.annotation.IdRes
+import com.core.base.util.toDp
+import kotlin.random.Random
 
 
 class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
@@ -24,6 +29,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
     private val MAX_ITEMS = 5
 
     var navItems: ArrayList<BottomCircleNavItem> = arrayListOf()
+    var navDataItems: List<BottomNavItemData> = arrayListOf()
     var navItemsViews: ArrayList<View> = arrayListOf()
 
     var bottomNavClickListener: OnBottomNavClickListener? = null
@@ -84,20 +90,12 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
      * @param attrs   custom attributes
      */
     private fun init(context: Context, attrs: AttributeSet?) {
-        if (attrs != null) {
-            val ta =
-                context.obtainStyledAttributes(attrs, R.styleable.BottomCircleNavLayout, 0, 0)
-            try {
-                currentActiveItemPosition =
-                    ta.getInt(R.styleable.BottomCircleNavLayout_ci_default_item, 0)
-            } finally {
-                ta.recycle()
-            }
-        }
         post { updateChildNavItems() }
     }
 
     fun init(dataItemList: List<BottomNavItemData>) {
+        this.navDataItems = dataItemList
+
         setItemList(dataItemList)
         setConstraints()
     }
@@ -107,6 +105,8 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
      */
 
     fun setItemList(dataItemList: List<BottomNavItemData>) {
+        this.navDataItems = dataItemList
+
         val list = createViewsFromDataObjects(dataItemList) as ArrayList<View>
         this.navItemsViews = list
 
@@ -117,7 +117,19 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
         }
     }
 
+    fun setBadgeToItem(@IdRes menuActionId: Int, amount: Int) {
+        for((index, item) in navDataItems.withIndex()) {
+            if(item.menuActionId == menuActionId) {
+                navItems[index].setAmountOfNotifications(amount)
+
+                break
+            }
+        }
+    }
+
     fun createViewsFromDataObjects(dataItemList: List<BottomNavItemData>): ArrayList<BottomCircleNavItem> {
+        this.navDataItems = dataItemList
+
         val viewsList = arrayListOf<BottomCircleNavItem>()
         for (itemData in dataItemList)
             if (itemData.isCircle)
@@ -304,7 +316,9 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         ConstraintSet.PARENT_ID,
                         navItemsViews[index + 1].id
                     )
-                    set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
+                    if (navItemsViews.size > 3) {
+                        set.setMargin(navItem.id, ConstraintSet.START, 16.toDp)
+                    }
                 }
                 navItemsViews.size - 1 -> {
                     set.addToHorizontalChainRTL(
@@ -312,7 +326,9 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
                         navItemsViews[index - 1].id,
                         ConstraintSet.PARENT_ID
                     )
-                    set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
+                    if (navItemsViews.size > 3) {
+                        set.setMargin(navItem.id, ConstraintSet.END, 16.toDp)
+                    }
                 }
                 else -> {
                     set.addToHorizontalChainRTL(
@@ -325,7 +341,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
 
             if (navItem is BottomCircleNavCircleView) {
                 set.connect(navItem.id, ConstraintSet.TOP, id, ConstraintSet.TOP)
-                set.setHorizontalWeight(navItem.id, if (navItemsViews.size > 3) 1.3f else 1f)
+                set.setHorizontalWeight(navItem.id, 1.3f)
             } else {
                 set.connect(navItem.id, ConstraintSet.TOP, getChildAt(0).id, ConstraintSet.TOP)
 

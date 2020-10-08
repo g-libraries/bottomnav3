@@ -19,6 +19,7 @@ data class BottomNavItemData(
     val titleTextActive: String,
     val titleTextInactive: String,
     val titleTextDisabled: String,
+    val badgeIcon: String,
     val imageNameActive: String,
     val imageNameInactive: String,
     val imageNameDisabled: String,

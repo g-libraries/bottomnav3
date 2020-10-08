@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="BottomCircleNavItemView">
         <attr name="bt_active_icon" format="reference" />
+        <attr name="bt_badge_icon" format="reference" />
         <attr name="bt_inactive_icon" format="reference" />
         <attr name="bt_disabled_icon" format="reference" />
         <attr name="bt_iconWidth" format="dimension" />
@@ -16,6 +17,7 @@
     </declare-styleable>
 
     <declare-styleable name="BottomCircleNavCircleView">
+        <attr name="ci_badge_icon" format="reference" />
         <attr name="ci_active_icon" format="reference" />
         <attr name="ci_inactive_icon" format="reference" />
         <attr name="ci_disabled_icon" format="reference" />

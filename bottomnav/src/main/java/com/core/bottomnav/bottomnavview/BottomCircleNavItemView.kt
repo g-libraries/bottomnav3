@@ -50,6 +50,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
     private var title: String? = null
 
+    var badgeIcon: Drawable? = null
     var activeIcon: Drawable? = null
     var inactiveIcon: Drawable? = null
     var disabledIcon: Drawable? = null
@@ -69,15 +70,13 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         context.resources.getDimension(R.dimen._5sdp).toInt()
 
     lateinit var iconView: ImageView
+    lateinit var badgeIconView: ImageView
     lateinit var titleView: TextView
-
 
 
     fun init(
         bottomNavItemData: BottomNavItemData
     ) {
-
-
         this.title = bottomNavItemData.title
         this.textColorActive = Color.parseColor(bottomNavItemData.titleTextActive)
         this.textColorInactive = Color.parseColor(bottomNavItemData.titleTextInactive)
@@ -86,6 +85,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         activeIcon = getDrawableByResName(bottomNavItemData.imageNameActive)
         inactiveIcon = getDrawableByResName(bottomNavItemData.imageNameInactive)
         disabledIcon = getDrawableByResName(bottomNavItemData.imageNameDisabled)
+        badgeIcon = getDrawableByResName(bottomNavItemData.badgeIcon)
 
         gravity = Gravity.CENTER
 
@@ -104,12 +104,18 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         )!!
 
 
-
     fun init(attrs: AttributeSet?) {
         if (attrs != null) {
             val ta =
                 context.obtainStyledAttributes(attrs, R.styleable.BottomCircleNavItemView, 0, 0)
             try {
+                badgeIcon = AppCompatResources.getDrawable(
+                    context,
+                    ta.getResourceId(
+                        R.styleable.BottomCircleNavItemView_bt_badge_icon,
+                        R.drawable.ic_nav_def_badge
+                    )
+                )
                 activeIcon = AppCompatResources.getDrawable(
                     context,
                     ta.getResourceId(
@@ -180,6 +186,11 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
         iconView.id = ViewCompat.generateViewId()
         iconView.setImageDrawable(inactiveIcon)
 
+        //create the badge nav icon
+        badgeIconView = ImageView(context)
+        badgeIconView.id = ViewCompat.generateViewId()
+        badgeIconView.setImageDrawable(badgeIcon)
+
         //create the nav title
         titleView = TextView(context)
         val lpTitle = LayoutParams(
@@ -194,11 +205,27 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
         lpIcon.addRule(CENTER_HORIZONTAL, TRUE)
 
+        val lpBadgeIcon = LayoutParams(
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
+        )
+
+        lpBadgeIcon.addRule(ALIGN_PARENT_TOP, TRUE)
+        lpBadgeIcon.addRule(ALIGN_PARENT_END, TRUE)
+
+//        lpBadgeIcon.setMargins(
+//            0,
+//            context.resources.getDimension(R.dimen._2sdp).toInt(),
+//            context.resources.getDimension(R.dimen._2sdp).toInt(),
+//            0
+//        )
+
         lpTitle.addRule(CENTER_HORIZONTAL, TRUE)
         lpTitle.addRule(BELOW, iconView.id)
 
         titleView.layoutParams = lpTitle
         iconView.layoutParams = lpIcon
+        badgeIconView.layoutParams = lpBadgeIcon
 
         titleView.setPadding(0, titlePadding, 0, 0)
         titleView.isSingleLine = true
@@ -210,7 +237,7 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
         addView(iconView)
         addView(titleView)
-
+        addView(badgeIconView)
 
         //set the initial state
         setState(active)
@@ -286,6 +313,10 @@ class BottomCircleNavItemView : RelativeLayout, BottomCircleNavItem {
 
     override fun setTitle(title: String) {
         this.title = title
+    }
+
+    override fun setAmountOfNotifications(amount: Int) {
+        badgeIconView.visibility = if (amount > 0) View.VISIBLE else View.GONE
     }
 }
 

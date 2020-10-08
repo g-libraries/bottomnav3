@@ -10,9 +10,10 @@ interface BottomCircleNavItem {
     fun enable()
     fun getId(): Int
     fun isActive(): Boolean
+    fun setAmountOfNotifications(amount: Int)
     fun setOnItemClickListener(listener: View.OnClickListener)
     fun setState(isActive: Boolean)
     fun setTypeface(typface: Typeface)
-    fun setTitle(title:String)
+    fun setTitle(title: String)
     fun isDisabled(): Boolean
 }
