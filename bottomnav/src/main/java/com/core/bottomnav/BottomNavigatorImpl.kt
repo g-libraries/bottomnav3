@@ -79,6 +79,8 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         fragmentManager.registerFragmentLifecycleCallbacks(object :
             FragmentManager.FragmentLifecycleCallbacks() {
 
+
+
             override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
                 super.onFragmentStarted(fm, f)
                 fragmentManager.getVisibleFragment()?.let {
@@ -89,32 +91,13 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
                                     showInstant
                                 )
 
-                            return
-                        }
-                    }
-
-
-                    showNavStrategy =
-                        ShowNavStrategy(
-                            showInstant
-                        ) // Can set strategy to showDelayed for extra effects
-                    hideNavView()
-                }
-            }
-
-
-            override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
-                super.onFragmentViewDestroyed(fm, f)
-                fragmentManager.getVisibleFragment()?.let {
-                    for (item in params.menuItems.filterIndexed { _, item -> item.showNavBoolean }) {
-                        if (item.fragmentType == it::class.java) {
                             showNavStrategy.apply()
 
                             return
                         }
                     }
 
-                    showNavStrategy = ShowNavStrategy(showInstant); hideNavView()
+                    hideNavView()
                 }
             }
         }, true)
