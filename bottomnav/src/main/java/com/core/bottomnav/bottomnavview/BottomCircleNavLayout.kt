@@ -222,7 +222,7 @@ class BottomCircleNavLayout : ConstraintLayout, View.OnClickListener {
             }
         }
         //set the active element
-        if (!foundActiveElement)
+        if (!foundActiveElement && navItems.size > currentActiveItemPosition)
             navItems[currentActiveItemPosition].setState(true)
     }
 
