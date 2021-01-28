@@ -57,11 +57,12 @@ abstract class BottomNavigatorImpl constructor(var activity: Activity, var param
         navigationView.bottomNavClickListener = object : OnBottomNavClickListener {
             override fun onClicked(pos: Int, id: Int): Boolean {
                 if (pos == navigationView.getCurrentActiveItemPosition()) return false
-                return if (guest && !params.menuItems.find { it.menuItemId == id }?.noAuthAvailable!!) {
+                val menuItem = params.menuItems.find { it.menuItemId == id }
+                return if (guest && menuItem?.noAuthAvailable != true) {
                     navListener.invoke()
                     false
                 } else {
-                    params.menuItems.find { it.menuItemId == id }?.let {
+                    menuItem?.let {
                         navigationController.navigate(it.menuActionId)
                     }
                     true
